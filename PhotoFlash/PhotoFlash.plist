@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>title</key>
+    <string>PhotoTorch</string>
+    <key>entry</key>
+    <dict>
+      <key>cell</key>
+      <string>PSLinkCell</string>
+      <key>icon</key>
+      <string>PF.png</string>
+      <key>label</key>
+      <string>PhotoTorch</string>
+    </dict>
+    <key>items</key>
+    <array>
+    	<dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
+        <string>Kill switch</string>
+      </dict>
+      <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>default</key>
+        <true/>
+        <key>defaults</key>
+        <string>com.PS.PhotoFlash</string>
+        <key>key</key>
+        <string>PFEnabled</string>
+        <key>label</key>
+        <string>Enable Tweak</string>
+        <key>PostNotification</key>
+        <string>com.PS.PhotoFlash.settingschanged</string>
+      </dict>
+       <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
+        <string>Torch mode</string>
+      </dict>
+      <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>default</key>
+        <true/>
+        <key>defaults</key>
+        <string>com.PS.PhotoFlash</string>
+        <key>key</key>
+        <string>enableTorch</string>
+        <key>label</key>
+        <string>Enabled</string>
+        <key>PostNotification</key>
+        <string>com.PS.PhotoFlash.settingschanged</string>
+      </dict>
+      <dict>
+        <key>cell</key>
+        <string>PSSwitchCell</string>
+        <key>default</key>
+        <false/>
+        <key>defaults</key>
+        <string>com.PS.PhotoFlash</string>
+        <key>key</key>
+        <string>rightBtn</string>
+        <key>label</key>
+        <string>Button at right</string>
+        <key>PostNotification</key>
+        <string>com.PS.PhotoFlash.settingschanged</string>
+        <key>pl_filter</key>
+		<dict>
+		<key>ipad</key>
+		<false/>
+		<key>CoreFoundationVersion</key>
+			<array>
+				<string>794.00</string>
+			</array>
+		</dict>
+      </dict>
+      <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>label</key>
+        <string>Still images torch level</string>
+      </dict>
+      <dict>
+			<key>cell</key>
+			<string>PSSliderCell</string>
+			<key>default</key>
+			<real>0.65</real>
+			<key>defaults</key>
+			<string>com.PS.PhotoFlash</string>
+			<key>key</key>
+			<string>torchValue</string>
+			<key>max</key>
+			<real>1.0</real>
+			<key>min</key>
+			<real>0.1</real>
+			<key>showValue</key>
+			<true/>
+		</dict>
+      <dict>
+        <key>cell</key>
+        <string>PSGroupCell</string>
+        <key>footerAlignment</key>
+        <integer>1</integer>
+        <key>footerText</key>
+        <string>© 2013 - 2017 Thatchapon Unprasert
+(@PoomSmart)</string>
+      </dict>
+    </array>
+  </dict>
+</plist>

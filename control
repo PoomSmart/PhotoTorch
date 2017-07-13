@@ -1,0 +1,8 @@
+Architecture: iphoneos-arm
+Name: PhotoTorch (Debug)
+Package: org.thebigboss.phototorch
+Version: 1.0
+Author: PoomSmart
+Pre-Depends: firmware (>= 6.0), gsc.camera-flash
+Depends: mobilesubstrate, preferenceloader
+Description: adjustable torch for camera app.
