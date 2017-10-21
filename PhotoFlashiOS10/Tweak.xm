@@ -1,5 +1,6 @@
 #import "../PhotoFlash.h"
 #import "../PSPTWYPopoverController.h"
+#import <UIKit/UIColor+Private.h>
 
 @interface CAMTopBar (PhotoTorch)
 - (BOOL)pt_shouldHideYellowDot;
@@ -88,9 +89,13 @@ PSPTWYPopoverController *popover;
     writeTorchMode();
 }
 
+- (NSInteger)torchMode {
+    return [self.cameraController respondsToSelector:@selector(torchMode)] ? self.cameraController.torchMode : self.cameraController._torchMode;
+}
+
 - (void)updateSliderAvailability {
     if (!isStillImageCamera(self.cameraController))
-        self.slider.enabled = (self.cameraController._captureController._captureEngine.cameraDevice.torchLevel > 0.0) && self.cameraController._torchMode != 0;
+        self.slider.enabled = (self.cameraController._captureController._captureEngine.cameraDevice.torchLevel > 0.0) && self.torchMode != 0;
 }
 
 - (UISlider *)torchSlider {

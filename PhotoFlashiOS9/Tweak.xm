@@ -1,5 +1,6 @@
 #import "../PhotoFlash.h"
 #import "../PSPTWYPopoverController.h"
+#import <UIKit/UIColor+Private.h>
 
 @interface CAMTopBar (PhotoTorch)
 - (BOOL)pt_shouldHideYellowDot;
