@@ -23,7 +23,7 @@ CAMViewfinderViewController *vf;
 #define __currentMode (vf._currentMode)
 #define __currentDevice (vf._currentDevice)
 
-static void setTorchValue(CAMViewfinderViewController *cameraController){
+static void setTorchValue(CAMViewfinderViewController *cameraController) {
     AVCaptureDevice *cameraDevice = cameraController._captureController._captureEngine.cameraDevice;
     if ([cameraDevice isTorchAvailable]) {
         if ([cameraDevice lockForConfiguration:nil]) {
@@ -156,7 +156,7 @@ PSPTWYPopoverController *popover;
 
 PhotoTorchTableDataSource *ds;
 
-static void listTapped(CAMViewfinderViewController *self, UIButton *button){
+static void listTapped(CAMViewfinderViewController *self, UIButton *button) {
     vc = [UIViewController new];
     ds = [[PhotoTorchTableDataSource alloc] initWithCameraController:self];
     tb = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
@@ -182,7 +182,7 @@ static void listTapped(CAMViewfinderViewController *self, UIButton *button){
     [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:IS_IPAD ? PSPTWYPopoverArrowDirectionRight : PSPTWYPopoverArrowDirectionAny animated:YES];
 }
 
-static void positionBtn(CAMTopBar *topBar){
+static void positionBtn(CAMTopBar *topBar) {
     if (btn) {
         if (IS_IPAD) {
             CGFloat topBarWidth = topBar.frame.size.width;
@@ -197,7 +197,7 @@ static void positionBtn(CAMTopBar *topBar){
     }
 }
 
-static void createListButton(CAMTopBar *topBar){
+static void createListButton(CAMTopBar *topBar) {
     btn = (CUShutterButton *)[%c(CUShutterButton) tinyShutterButtonWithLayoutStyle : 1];
     btnSize = [btn intrinsicContentSize].width;
     MSHookIvar<UIView *>(btn, "__innerView").backgroundColor = UIColor.systemYellowColor;

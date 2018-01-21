@@ -15,7 +15,7 @@
 #define isStillImageBackCamera(controller) ((controller.cameraDevice == 0) && [NSClassFromString(@"CAMCaptureController") isStillImageMode:controller.cameraMode])
 #define isVideoMode(controller) ((controller.cameraDevice == 0) && [NSClassFromString(@"CAMCaptureController") isVideoMode:controller.cameraMode])
 
-static void setTorchValue(CAMCaptureController *cameraController){
+static void setTorchValue(CAMCaptureController *cameraController) {
     if ([cameraController.currentDevice isTorchAvailable]) {
         if ([cameraController _lockCurrentDeviceForConfiguration]) {
             BOOL isVideoMode1 = isVideoMode(cameraController);
@@ -137,7 +137,7 @@ PSPTWYPopoverController *popover;
 
 PhotoTorchTableDataSource *ds;
 
-static void listTapped(CAMCameraView *self, UIButton *button){
+static void listTapped(CAMCameraView *self, UIButton *button) {
     vc = [UIViewController new];
     ds = [[PhotoTorchTableDataSource alloc] initWithCameraController:(CAMCaptureController *)[NSClassFromString(@"CAMCaptureController") sharedInstance]];
     tb = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];

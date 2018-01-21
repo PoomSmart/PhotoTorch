@@ -23,7 +23,7 @@ CAMViewfinderViewController *vf;
 #define __currentMode (vf._currentMode)
 #define __currentDevice (vf._currentDevice)
 
-static void setTorchValue(CAMViewfinderViewController *cameraController){
+static void setTorchValue(CAMViewfinderViewController *cameraController) {
     AVCaptureDevice *cameraDevice = cameraController._captureController._captureEngine.cameraDevice;
     if ([cameraDevice isTorchAvailable]) {
         if ([cameraDevice lockForConfiguration:nil]) {
