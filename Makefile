@@ -1,21 +1,11 @@
-PACKAGE_VERSION = 1.6.3
-
-ifeq ($(SIMULATOR),1)
-	TARGET = simulator:clang:latest
-	ARCHS = x86_64 i386
-endif
+PACKAGE_VERSION = 1.6.4
 
 include $(THEOS)/makefiles/common.mk
 
 AGGREGATE_NAME = PhotoFlash
-SUBPROJECTS = PhotoFlashiOS6 PhotoFlashiOS7 PhotoFlashiOS8 PhotoFlashiOS9 PhotoFlashiOS10
+SUBPROJECTS = PhotoFlashiOS6 PhotoFlashiOS7 PhotoFlashiOS8 PhotoFlashiOS9 PhotoFlashiOS10 PhotoFlashLoader
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
-
-TWEAK_NAME = PhotoFlash
-PhotoFlash_FILES = Tweak.xm
-
-include $(THEOS_MAKE_PATH)/tweak.mk
 
 internal-stage::
 	$(ECHO_NOTHING)mkdir -p $(THEOS_STAGING_DIR)/Library/PreferenceLoader/Preferences$(ECHO_END)

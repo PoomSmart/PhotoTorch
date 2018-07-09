@@ -281,7 +281,34 @@ static void cleanup() {
 
 %hook CAMViewfinderViewController
 
-- (id)initWithCaptureController: (CUCaptureController *)arg1 captureConfiguration: (id)arg2 conflictingControlConfiguration: (id)arg3 locationController: (id)arg4 motionController: (id)arg5 timelapseController: (id)arg6 keepAliveController: (id)arg7 remoteShutterController: (id)arg8 powerController: (id)arg9 cameraRollController: (id)arg10 usingEmulationMode: (NSInteger)arg11 initialLayoutStyle: (NSInteger)arg12 {
+- (id)initWithCaptureController: (CUCaptureController *)arg1 captureConfiguration: (id)arg2
+                                                        conflictingControlConfiguration: (id)arg3
+                                                        locationController: (id)arg4
+                                                        motionController: (id)arg5
+                                                        timelapseController: (id)arg6
+                                                        keepAliveController: (id)arg7
+                                                        remoteShutterController: (id)arg8
+                                                        powerController: (id)arg9
+                                                        cameraRollController: (id)arg10
+                                                        usingEmulationMode: (NSInteger)arg11
+                                                        initialLayoutStyle: (NSInteger)arg12 {
+    self = %orig;
+    vf = self;
+    return self;
+}
+
+- (id)initWithCaptureController: (CUCaptureController *)arg1 captureConfiguration: (id)arg2
+                                                        conflictingControlConfiguration: (id)arg3
+                                                        locationController: (id)arg4
+                                                        motionController: (id)arg5
+                                                        timelapseController: (id)arg6
+                                                        keepAliveController: (id)arg7
+                                                        remoteShutterController: (id)arg8
+                                                        powerController: (id)arg9
+                                                        cameraRollController: (id)arg10
+                                                        callStatusMonitor:(id)arg11
+                                                        usingEmulationMode: (NSInteger)arg12
+                                                        initialLayoutStyle: (NSInteger)arg13 {
     self = %orig;
     vf = self;
     return self;
