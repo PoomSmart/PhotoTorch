@@ -12,6 +12,6 @@ PhotoFlashiOS10_USE_SUBSTRATE = 1
 PhotoFlashiOS10_FILES = Tweak.xm ../PSPTWYPopoverController.m
 PhotoFlashiOS10_FRAMEWORKS = AVFoundation CoreGraphics UIKit
 PhotoFlashiOS10_LIBRARIES = substrate
-PhotoFlashiOS10_INSTALL_PATH = /Library/Application Support/PhotoFlash
+PhotoFlashiOS10_INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries/PhotoFlash
 
 include $(THEOS_MAKE_PATH)/library.mk

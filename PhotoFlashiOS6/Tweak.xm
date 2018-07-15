@@ -30,10 +30,10 @@ CGFloat heightForCamstamp;
 
 %hook PLCameraController
 
-- (void)_capturedPhotoWithDictionary: (id)dictionary error: (id)error {
+- (void)_capturedPhotoWithDictionary:(id)dictionary error:(id)error {
     %orig;
     if (torchMode && self.flashMode == 1 && self.cameraDevice == 0 && self.cameraMode == 0) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
             if ([self.currentDevice isTorchAvailable]) {
                 if ([self _lockCurrentDeviceForConfiguration]) {
                     self.currentDevice.torchMode = AVCaptureTorchModeOff;
@@ -46,7 +46,7 @@ CGFloat heightForCamstamp;
 }
 
 %new
-- (void)ToggleMode: (UISwitch *)sender {
+- (void)ToggleMode:(UISwitch *)sender {
     torchMode = sender.on;
     setTorchValue(self);
     writeTorchMode();
@@ -54,7 +54,7 @@ CGFloat heightForCamstamp;
 }
 
 %new
-- (void)SliderDidChange: (UISlider *)sender {
+- (void)SliderDidChange:(UISlider *)sender {
     if (torchMode || self.cameraMode != 0) {
         torchValue = sender.value;
         setTorchValue(self);
@@ -66,7 +66,7 @@ CGFloat heightForCamstamp;
 
 %hook PLCameraView
 
-- (void)_showSettings: (BOOL)settings sender: (id)sender {
+- (void)_showSettings:(BOOL)settings sender:(id)sender {
     %orig;
     if (settings) {
         BOOL show = !(self.cameraMode + self.cameraDevice == 0);
@@ -82,7 +82,7 @@ CGFloat heightForCamstamp;
 
 %hook PLCameraSettingsView
 
-- (id)initWithFrame: (CGRect)frame showGrid: (BOOL)grid showHDR: (BOOL)hdr showPano: (BOOL)pano {
+- (id)initWithFrame:(CGRect)frame showGrid:(BOOL)grid showHDR:(BOOL)hdr showPano:(BOOL)pano {
     id ret = %orig;
     NSInteger count = 0;
     count += (NSInteger)(grid + hdr + pano);
@@ -90,19 +90,19 @@ CGFloat heightForCamstamp;
     if (orient == UIInterfaceOrientationPortraitUpsideDown)
         count = -count;
     if (torchModeGroupView == nil) {
-        torchModeGroupView = [[%c(PLCameraSettingsGroupView) alloc] initWithFrame:CGRectMake(0.0f, ((56.0f * count) + heightForCamstamp), frame.size.width, 50)];
+        torchModeGroupView = [[%c(PLCameraSettingsGroupView) alloc] initWithFrame:CGRectMake(0.0, ((56.0 * count) + heightForCamstamp), frame.size.width, 50)];
         [torchModeGroupView setType:0];
         [torchModeGroupView setTitle:@"Torch Mode"];
     }
     if (torchSliderGroupView == nil) {
-        torchSliderGroupView = [[%c(PLCameraSettingsGroupView) alloc] initWithFrame:CGRectMake(0.0f, ((56.0f * (1 + count)) + heightForCamstamp - 3), frame.size.width, 50)];
+        torchSliderGroupView = [[%c(PLCameraSettingsGroupView) alloc] initWithFrame:CGRectMake(0.0, ((56.0 * (1 + count)) + heightForCamstamp - 3), frame.size.width, 50)];
         [torchSliderGroupView setType:0];
         [torchSliderGroupView setTitle:@"Torch Level"];
     }
     if (torchSlider == nil) {
         torchSlider = [[UISlider alloc] init];
-        torchSlider.minimumValue = 0.1f;
-        torchSlider.maximumValue = 1.0f;
+        torchSlider.minimumValue = 0.1;
+        torchSlider.maximumValue = 1.0;
         torchSlider.value = torchValue;
         torchSlider.continuous = YES;
         torchSlider.userInteractionEnabled = YES;
@@ -149,22 +149,22 @@ CGFloat heightForCamstamp;
 }
 
 %new
-- (void)pt_toggleMode: (UISwitch *)sender {
+- (void)pt_toggleMode:(UISwitch *)sender {
     [(PLCameraController *)[%c(PLCameraController) sharedInstance] ToggleMode:sender];
 }
 
 %new
-- (void)pt_sliderDidChange: (UISlider *)torchSlider {
+- (void)pt_sliderDidChange:(UISlider *)torchSlider {
     [(PLCameraController *)[%c(PLCameraController) sharedInstance] SliderDidChange:torchSlider];
 }
 
 %new
-- (void)pt_sliderTapped: (UISlider *)slider {
+- (void)pt_sliderTapped:(UISlider *)slider {
     [((PLCameraController *)[%c(PLCameraController) sharedInstance]).currentDevice lockForConfiguration:nil];
 }
 
 %new
-- (void)pt_sliderReleased: (UISlider *)slider {
+- (void)pt_sliderReleased:(UISlider *)slider {
     [((PLCameraController *)[%c(PLCameraController) sharedInstance]).currentDevice unlockForConfiguration];
 }
 
@@ -175,7 +175,7 @@ CGFloat heightForCamstamp;
     PhotoFlashLoader();
     if (PFisOn) {
         dlopen("/System/Library/PrivateFrameworks/PhotoLibrary.framework/PhotoLibrary", RTLD_LAZY);
-        heightForCamstamp = dlopen("/Library/MobileSubstrate/DynamicLibraries/Camstamp.dylib", RTLD_LAZY | RTLD_NOLOAD) ? 52.0f : 0.0f;
+        heightForCamstamp = dlopen("/Library/MobileSubstrate/DynamicLibraries/Camstamp.dylib", RTLD_LAZY | RTLD_NOLOAD) ? 52.0 : 0.0;
         %init;
     }
 }

@@ -82,8 +82,8 @@ PSPTWYPopoverController *popover;
     if (self.slider == nil) {
         self.slider = [UISlider new];
         self.slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.slider.minimumValue = 0.1f;
-        self.slider.maximumValue = 1.0f;
+        self.slider.minimumValue = 0.1;
+        self.slider.maximumValue = 1.0;
         self.slider.tintColor = [UIColor systemYellowColor];
         [self.slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -112,7 +112,7 @@ PSPTWYPopoverController *popover;
                 [cell.contentView addSubview:torchSlider1];
                 if (!isStillImageBackCamera(self.cameraController))
                     torchSlider1.enabled = (self.cameraController.currentDevice.torchLevel > 0.0);
-                torchSlider1.bounds = CGRectMake(0.0f, 0.0f, cell.contentView.bounds.size.width - 30.0f, torchSlider1.bounds.size.height);
+                torchSlider1.bounds = CGRectMake(0.0, 0.0, cell.contentView.bounds.size.width - 30.0, torchSlider1.bounds.size.height);
                 torchSlider1.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
                 torchSlider1.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
                 break;
@@ -159,15 +159,15 @@ static void listTapped(CAMCameraView *self, UIButton *button) {
     popover.theme.innerStrokeColor = [UIColor whiteColor];
     [popover endThemeUpdates];
     popover.wantsDefaultContentAppearance = NO;
-    popover.popoverContentSize = CGSizeMake(220.0f, height);
+    popover.popoverContentSize = CGSizeMake(220.0, height);
     [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:PSPTWYPopoverArrowDirectionAny animated:YES];
 }
 
 static void createListButton(CAMTopBar *topBar) {
     btn = [%c(CAMShutterButton) smallShutterButton];
-    btn.transform = CGAffineTransformMakeScale(0.5f, 0.5f);
+    btn.transform = CGAffineTransformMakeScale(0.5, 0.5);
     MSHookIvar<UIView *>(btn, "__innerView").backgroundColor = [UIColor systemYellowColor];
-    MSHookIvar<UIView *>(btn, "__outerView").layer.borderWidth = 3.0f;
+    MSHookIvar<UIView *>(btn, "__outerView").layer.borderWidth = 3.0;
     btn.translatesAutoresizingMaskIntoConstraints = NO;
     btn.userInteractionEnabled = YES;
     [btn addTarget:topBar.delegate action:@selector(pt_listTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -216,7 +216,7 @@ static void cleanup() {
 %hook CAMCameraView
 
 %new
-- (void)pt_listTapped: (UIButton *)button {
+- (void)pt_listTapped:(UIButton *)button {
     listTapped(self, button);
 }
 
@@ -231,12 +231,12 @@ static void cleanup() {
 }
 
 %new
-- (BOOL)pt_topBarShouldHideYellowDot: (id)arg1 {
+- (BOOL)pt_topBarShouldHideYellowDot:(id)arg1 {
     return [self pt_shouldHideYellowDotForMode:self.cameraMode];
 }
 
 %new
-- (BOOL)pt_shouldHideYellowDotForMode: (NSInteger)mode {
+- (BOOL)pt_shouldHideYellowDotForMode:(NSInteger)mode {
     return [self _shouldHideFlashButtonForMode:mode] || self.cameraDevice != 0;
 }
 
@@ -289,7 +289,7 @@ static void cleanup() {
 - (void)_didTakePhoto {
     %orig;
     if (torchMode && self.flashMode == 1 && isStillImageBackCamera(self) && !self.performingAvalancheCapture) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
             if ([self.currentDevice isTorchAvailable]) {
                 if ([self _lockCurrentDeviceForConfiguration]) {
                     self.currentDevice.torchMode = AVCaptureTorchModeOff;

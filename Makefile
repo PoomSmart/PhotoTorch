@@ -1,8 +1,8 @@
-PACKAGE_VERSION = 1.6.4
+PACKAGE_VERSION = 1.7
 
 include $(THEOS)/makefiles/common.mk
 
-AGGREGATE_NAME = PhotoFlash
+AGGREGATE_NAME = PhotoFlashTweak
 SUBPROJECTS = PhotoFlashiOS6 PhotoFlashiOS7 PhotoFlashiOS8 PhotoFlashiOS9 PhotoFlashiOS10 PhotoFlashLoader
 
 include $(THEOS_MAKE_PATH)/aggregate.mk
