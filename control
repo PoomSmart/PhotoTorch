@@ -1,9 +1,12 @@
 Architecture: iphoneos-arm
 Name: PhotoTorch
-Package: org.thebigboss.phototorch
+Package: com.spicat.phototorch
 Version: 1.0
-Author: PoomSmart
-Pre-Depends: firmware (>= 6.0), gsc.camera-flash
-Depends: mobilesubstrate, preferenceloader
+Author: SpicaT
+Maintainer: SpicaT
+Depends: firmware (>= 6.0), gsc.camera-flash, mobilesubstrate, preferenceloader
+Conflicts: org.thebigboss.phototorch
+Replaces: org.thebigboss.phototorch
+Provides: org.thebigboss.phototorch
 Description: adjustable torch for camera app.
 Section: Tweaks

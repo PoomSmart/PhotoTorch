@@ -102,8 +102,8 @@ PSPTWYPopoverController *popover;
     if (self.slider == nil) {
         self.slider = [UISlider new];
         self.slider.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.slider.minimumValue = 0.1f;
-        self.slider.maximumValue = 1.0f;
+        self.slider.minimumValue = 0.1;
+        self.slider.maximumValue = 1.0;
         self.slider.tintColor = [UIColor systemYellowColor];
         [self.slider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
     }
@@ -131,7 +131,7 @@ PSPTWYPopoverController *popover;
                 UISlider *torchSlider1 = [self torchSlider];
                 [cell.contentView addSubview:torchSlider1];
                 [self updateSliderAvailability];
-                torchSlider1.bounds = CGRectMake(0.0f, 0.0f, cell.contentView.bounds.size.width - 30.0f, torchSlider1.bounds.size.height);
+                torchSlider1.bounds = CGRectMake(0.0, 0.0, cell.contentView.bounds.size.width - 30.0, torchSlider1.bounds.size.height);
                 torchSlider1.center = CGPointMake(CGRectGetMidX(cell.contentView.bounds), CGRectGetMidY(cell.contentView.bounds));
                 torchSlider1.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
                 break;
@@ -178,7 +178,7 @@ static void listTapped(CAMViewfinderViewController *self, UIButton *button) {
     popover.theme.innerStrokeColor = [UIColor whiteColor];
     [popover endThemeUpdates];
     popover.wantsDefaultContentAppearance = NO;
-    popover.popoverContentSize = CGSizeMake(220.0f, height);
+    popover.popoverContentSize = CGSizeMake(220.0, height);
     [popover presentPopoverFromRect:button.bounds inView:button permittedArrowDirections:IS_IPAD ? PSPTWYPopoverArrowDirectionRight : PSPTWYPopoverArrowDirectionAny animated:YES];
 }
 
@@ -192,16 +192,30 @@ static void positionBtn(CAMTopBar *topBar) {
             if (!rightBtn)
                 btn.frame = CGRectMake(topBar.flashButton.frame.origin.x + topBar.flashButton.frame.size.width - 3, originY, btnSize, btnSize);
             else
-                btn.frame = CGRectMake(topBar.flipButton.frame.origin.x - 5 - btnSize, originY, btnSize, btnSize);
+                btn.frame = CGRectMake(topBar.filterButton.frame.origin.x - 4.5 - btnSize, originY, btnSize, btnSize);
         }
     }
 }
 
+%hook CUShutterButton
+
+- (BOOL)_shouldShowContrastBorderForMode:(NSInteger)mode layoutStyle:(NSInteger)layoutStyle {
+    return NO;
+}
+
+%end
+
 static void createListButton(CAMTopBar *topBar) {
-    btn = (CUShutterButton *)[%c(CUShutterButton) tinyShutterButtonWithLayoutStyle : 1];
-    btnSize = [btn intrinsicContentSize].width;
+    if (isiOS11Up) {
+        btn = (CUShutterButton *)[%c(CUShutterButton) smallShutterButtonWithLayoutStyle:1];
+        btn.transform = CGAffineTransformMakeScale(0.52, 0.52);
+        btnSize = [btn intrinsicContentSize].width * 0.52;
+    } else {
+        btn = (CUShutterButton *)[%c(CUShutterButton) tinyShutterButtonWithLayoutStyle:1];
+        btnSize = [btn intrinsicContentSize].width;
+    }
     MSHookIvar<UIView *>(btn, "__innerView").backgroundColor = UIColor.systemYellowColor;
-    MSHookIvar<UIView *>(btn, "__outerView").layer.borderWidth = 3.0f;
+    MSHookIvar<UIView *>(btn, "__outerView").layer.borderWidth = 3.0;
     btn.userInteractionEnabled = YES;
     [btn addTarget:vf action:@selector(pt_listTapped:) forControlEvents:UIControlEventTouchUpInside];
     if ([topBar respondsToSelector:@selector(_backgroundView)])
@@ -281,34 +295,36 @@ static void cleanup() {
 
 %hook CAMViewfinderViewController
 
-- (id)initWithCaptureController: (CUCaptureController *)arg1 captureConfiguration: (id)arg2
-                                                        conflictingControlConfiguration: (id)arg3
-                                                        locationController: (id)arg4
-                                                        motionController: (id)arg5
-                                                        timelapseController: (id)arg6
-                                                        keepAliveController: (id)arg7
-                                                        remoteShutterController: (id)arg8
-                                                        powerController: (id)arg9
-                                                        cameraRollController: (id)arg10
-                                                        usingEmulationMode: (NSInteger)arg11
-                                                        initialLayoutStyle: (NSInteger)arg12 {
+- (id)initWithCaptureController:(CUCaptureController *)arg1
+                            captureConfiguration:(id)arg2
+                            conflictingControlConfiguration:(id)arg3 
+                            locationController:(id)arg4
+                            motionController:(id)arg5
+                            timelapseController:(id)arg6
+                            keepAliveController:(id)arg7
+                            remoteShutterController:(id)arg8
+                            powerController:(id)arg9
+                            cameraRollController:(id)arg10
+                            callStatusMonitor:(id)arg11
+                            usingEmulationMode:(NSInteger)arg12
+                            initialLayoutStyle:(NSInteger)arg13 {
     self = %orig;
     vf = self;
     return self;
 }
 
-- (id)initWithCaptureController: (CUCaptureController *)arg1 captureConfiguration: (id)arg2
-                                                        conflictingControlConfiguration: (id)arg3
-                                                        locationController: (id)arg4
-                                                        motionController: (id)arg5
-                                                        timelapseController: (id)arg6
-                                                        keepAliveController: (id)arg7
-                                                        remoteShutterController: (id)arg8
-                                                        powerController: (id)arg9
-                                                        cameraRollController: (id)arg10
-                                                        callStatusMonitor:(id)arg11
-                                                        usingEmulationMode: (NSInteger)arg12
-                                                        initialLayoutStyle: (NSInteger)arg13 {
+- (id)initWithCaptureController:(CUCaptureController *)arg1
+                            captureConfiguration:(id)arg2
+                            conflictingControlConfiguration:(id)arg3 
+                            locationController:(id)arg4
+                            motionController:(id)arg5
+                            timelapseController:(id)arg6
+                            keepAliveController:(id)arg7
+                            remoteShutterController:(id)arg8
+                            powerController:(id)arg9
+                            cameraRollController:(id)arg10
+                            usingEmulationMode:(NSInteger)arg11
+                            initialLayoutStyle:(NSInteger)arg12 {
     self = %orig;
     vf = self;
     return self;
@@ -325,8 +341,7 @@ static void cleanup() {
 }
 
 %new
-- (void)pt_listTapped: (UIButton *)button
-{
+- (void)pt_listTapped:(UIButton *)button {
     listTapped(self, button);
 }
 
@@ -341,7 +356,7 @@ static void cleanup() {
     %orig;
     if (torchMode && self.flashMode == 1 && isStillImageCamera(self) && ![self._captureController isCapturingBurst]) {
         AVCaptureDevice *cameraDevice = self._captureController._captureEngine.cameraDevice;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void) {
             if ([cameraDevice isTorchAvailable]) {
                 if ([cameraDevice lockForConfiguration:nil]) {
                     cameraDevice.torchMode = AVCaptureTorchModeOff;
@@ -354,7 +369,7 @@ static void cleanup() {
 }
 
 %new
-- (BOOL)pt_topBarShouldHideYellowDot: (id)arg1 {
+- (BOOL)pt_topBarShouldHideYellowDot:(id)arg1 {
     #if TARGET_OS_SIMULATOR
     return NO;
     #else
@@ -363,7 +378,7 @@ static void cleanup() {
 }
 
 %new
-- (BOOL)pt_shouldHideYellowDotForGraphConfiguration: (CAMCaptureGraphConfiguration *)configuration {
+- (BOOL)pt_shouldHideYellowDotForGraphConfiguration:(CAMCaptureGraphConfiguration *)configuration {
     #if TARGET_OS_SIMULATOR
     return NO;
     #else

@@ -10,7 +10,7 @@ NSString *kPFTorchKey = @ "enableTorch";
 NSString *kPFTorchVal = @ "torchValue";
 NSString *kRightBtnKey = @ "rightBtn";
 
-CGFloat kAnimInterval = 0.25f;
+CGFloat kAnimInterval = 0.25;
 
 BOOL PFisOn;
 BOOL torchMode;
@@ -26,7 +26,7 @@ static void PhotoFlashLoader() {
         [prefs writeToFile: PREF_PATH atomically: NO];
     }
     PFisOn = prefs[kPFEnabledKey] ? [prefs[kPFEnabledKey] boolValue] : YES;
-    torchValue = prefs[kPFTorchVal] ? [prefs[kPFTorchVal] floatValue] : 1.0f;
+    torchValue = prefs[kPFTorchVal] ? [prefs[kPFTorchVal] floatValue] : 1.0;
     if (torchValue == 1.0)
         torchValue = AVCaptureMaxAvailableTorchLevel;
     torchMode = prefs[kPFTorchKey] ? [prefs[kPFTorchKey] boolValue] : YES;
